@@ -1,8 +1,10 @@
 from abc import ABC, abstractmethod
-from typing import List, Optional, TypeVar, Generic, Dict, Any
+from typing import List, Optional, TypeVar, Generic, Dict, Any, Union
+from uuid import UUID
 from app.db import get_supabase_client
 
 T = TypeVar('T')
+ItemId = TypeVar("ItemId", int, str, UUID)
 
 class BaseRepository(Generic[T], ABC):
     """
@@ -22,6 +24,11 @@ class BaseRepository(Generic[T], ABC):
         """Determina si los métodos de lista deben filtrar por el campo 'activo'. Por defecto es True."""
         return True
 
+    @property
+    def primary_key_column(self) -> str:
+        """El nombre de la columna de clave primaria. Por defecto es 'id'."""
+        return 'id'
+
     @abstractmethod
     def _dict_to_model(self, data: Dict[str, Any]) -> T:
         """Convierte un diccionario en una instancia del modelo."""
@@ -39,9 +46,9 @@ class BaseRepository(Generic[T], ABC):
 
         return self._dict_to_model(response.data[0])
 
-    def get_by_id(self, item_id: int) -> Optional[T]:
+    def get_by_id(self, item_id: ItemId) -> Optional[T]:
         """Recupera un único registro por su ID, independientemente de su estado 'activo'."""
-        query = self.client.table(self.table_name).select("*").eq('id', item_id)
+        query = self.client.table(self.table_name).select("*").eq(self.primary_key_column, str(item_id))
         response = query.limit(1).execute()
 
         if not response.data:
@@ -58,20 +65,20 @@ class BaseRepository(Generic[T], ABC):
         response = query.execute()
         return [self._dict_to_model(item) for item in response.data]
 
-    def update(self, item_id: int, model: T) -> T:
+    def update(self, item_id: ItemId, model: T) -> T:
         """Actualiza un registro por su ID."""
         data = model.to_dict()
-        data.pop('id', None)
+        data.pop(self.primary_key_column, None)
         data.pop('created_at', None)
 
-        response = self.client.table(self.table_name).update(data).eq('id', item_id).execute()
+        response = self.client.table(self.table_name).update(data).eq(self.primary_key_column, str(item_id)).execute()
 
         if not response.data:
             raise Exception(f"Error al actualizar el item con id {item_id} en {self.table_name}")
 
         return self._dict_to_model(response.data[0])
 
-    def delete(self, item_id: int) -> bool:
+    def delete(self, item_id: ItemId) -> bool:
         """
         Realiza un borrado lógico estableciendo 'activo' en False.
         Falla si el repositorio no usa el filtro 'activo'.
@@ -79,7 +86,7 @@ class BaseRepository(Generic[T], ABC):
         if not self.uses_activo_filter:
             raise NotImplementedError("El borrado lógico no está soportado para este repositorio.")
 
-        response = self.client.table(self.table_name).update({'activo': False}).eq('id', item_id).execute()
+        response = self.client.table(self.table_name).update({'activo': False}).eq(self.primary_key_column, str(item_id)).execute()
 
         return len(response.data) > 0
 

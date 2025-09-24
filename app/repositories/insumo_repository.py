@@ -1,35 +1,47 @@
 from typing import List, Optional, Dict, Any
 from datetime import datetime
-from app.models.materia_prima import MateriaPrima
+from app.models.insumo import Insumo
 from .base_repository import BaseRepository
 
-class MateriaPrimaRepository(BaseRepository[MateriaPrima]):
+class InsumoRepository(BaseRepository[Insumo]):
     
     @property
     def table_name(self) -> str:
-        return 'materias_primas'
+        return 'insumos_catalogo'
 
-    def _dict_to_model(self, data: Dict[str, Any]) -> MateriaPrima:
-        """Convierte un diccionario en una instancia del modelo MateriaPrima."""
-        return MateriaPrima(
-            id=data['id'],
-            codigo=data['codigo'],
-            nombre=data['nombre'],
-            unidad_medida=data['unidad_medida'],
-            categoria=data['categoria'],
-            stock_actual=data.get('stock_actual'),  # Usar .get por seguridad
-            stock_minimo=data['stock_minimo'],
+    @property
+    def primary_key_column(self) -> str:
+        return 'id_insumo'
+
+    def _dict_to_model(self, data: Dict[str, Any]) -> Insumo:
+        """Convierte un diccionario en una instancia del modelo Insumo."""
+        return Insumo(
+            id_insumo=data.get('id_insumo'),
+            nombre=data.get('nombre'),
+            unidad_medida=data.get('unidad_medida'),
+            codigo_interno=data.get('codigo_interno'),
+            codigo_ean=data.get('codigo_ean'),
+            categoria=data.get('categoria'),
+            descripcion=data.get('descripcion'),
+            tem_recomendada=data.get('tem_recomendada'),
+            stock_min=data.get('stock_min'),
+            stock_max=data.get('stock_max'),
+            vida_util_dias=data.get('vida_util_dias'),
+            es_critico=data.get('es_critico'),
+            requiere_certificacion=data.get('requiere_certificacion'),
+            activo=data.get('activo'),
             created_at=datetime.fromisoformat(data['created_at']) if data.get('created_at') else None,
             updated_at=datetime.fromisoformat(data['updated_at']) if data.get('updated_at') else None,
-            activo=data['activo']
+            # El stock actual se calcula por separado, no viene de esta tabla
+            stock_actual=data.get('stock_actual', 0.0) 
         )
 
-    def obtener_por_codigo(self, codigo: str) -> Optional[MateriaPrima]:
-        """Recupera una materia prima por su código único."""
+    def obtener_por_codigo(self, codigo: str) -> Optional[Insumo]:
+        """Recupera un insumo por su código único."""
         return self.get_by('codigo', codigo)
 
-    def obtener_por_filtros(self, categoria: str = None, busqueda: str = None) -> List[MateriaPrima]:
-        """Recupera materias primas basándose en filtros opcionales."""
+    def obtener_por_filtros(self, categoria: str = None, busqueda: str = None) -> List[Insumo]:
+        """Recupera insumos basándose en filtros opcionales."""
         query = self.client.table(self.table_name).select("*").eq('activo', True)
         
         if categoria:
@@ -52,7 +64,7 @@ class MateriaPrimaRepository(BaseRepository[MateriaPrima]):
             print(f"Error al actualizar stock en la base de datos: {e}")
             return False
 
-    def update(self, item_id: int, model: MateriaPrima) -> MateriaPrima:
+    def update(self, item_id: int, model: Insumo) -> Insumo:
         """
         Sobrescribe el método de actualización base para añadir lógica personalizada para 'updated_at'
         y para evitar la actualización directa de 'stock_actual'.
@@ -60,20 +72,15 @@ class MateriaPrimaRepository(BaseRepository[MateriaPrima]):
         data = model.to_dict()
         data['updated_at'] = datetime.now().isoformat()
         
-        # Nos aseguramos de no intentar actualizar el stock desde aquí
         data.pop('stock_actual', None)
-
-        # El método de actualización de la clase base es demasiado genérico para este caso,
-        # así que realizamos la actualización directamente.
         data.pop('id', None)
         data.pop('created_at', None)
 
         response = self.client.table(self.table_name).update(data).eq('id', item_id).execute()
         
         if not response.data:
-            raise Exception(f"Error al actualizar materia prima con id {item_id}")
+            raise Exception(f"Error al actualizar insumo con id {item_id}")
         
         updated_data = response.data[0]
-        # El stock actual no se devuelve en la respuesta de actualización, lo mantenemos del objeto original
         updated_data['stock_actual'] = model.stock_actual
         return self._dict_to_model(updated_data)

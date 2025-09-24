@@ -1,10 +1,10 @@
 from flask import Flask, redirect, url_for, session, flash
 from flask_cors import CORS
 from app.config import Config
-from app.views.insumo import insumos_bp
-from app.views.inventario import inventario_bp
+# from app.views.insumo import insumos_bp # JULES: Comentado para evitar conflicto con el nuevo blueprint de insumos
+# from app.views.inventario import inventario_bp # JULES: Comentado para evitar conflicto con el nuevo blueprint de insumos
 from app.routes.usuario_routes import usuario_bp
-from app.routes.materia_prima_routes import materia_prima_bp
+from app.routes.insumo_routes import insumo_bp
 from app.routes.asistencia_routes import asistencia_bp
 from app.routes.dashboard_routes import dashboard_bp
 from app.routes.orden_produccion_routes import orden_produccion_bp
@@ -39,10 +39,10 @@ def create_app():
     })
 
     # Registrar blueprints
-    app.register_blueprint(insumos_bp)
-    app.register_blueprint(inventario_bp)
+    # app.register_blueprint(insumos_bp) # JULES: Comentado para evitar conflicto
+    # app.register_blueprint(inventario_bp) # JULES: Comentado para evitar conflicto
     app.register_blueprint(usuario_bp)
-    app.register_blueprint(materia_prima_bp)
+    app.register_blueprint(insumo_bp)
     app.register_blueprint(asistencia_bp)
     app.register_blueprint(dashboard_bp)
     app.register_blueprint(orden_produccion_bp)

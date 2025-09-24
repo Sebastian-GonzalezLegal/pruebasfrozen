@@ -2,21 +2,18 @@
 
 {% block title %}Alertas del Sistema - Sistema Frozen{% endblock %}
 
+{% block page_title %}
+    <i class="bi bi-exclamation-triangle-fill text-warning me-2"></i>
+    Alertas del Sistema
+{% endblock %}
+{% block page_subtitle %}Monitoreo de stock crítico y notificaciones importantes{% endblock %}
+{% block page_actions %}
+    <a href="{{ url_for('insumo.listar') }}" class="btn btn-outline-primary">
+        <i class="bi bi-box-seam me-1"></i>Ver Inventario
+    </a>
+{% endblock %}
+
 {% block content %}
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-4 border-bottom">
-    <div>
-        <h1 class="h2 mb-1">
-            <i class="bi bi-exclamation-triangle-fill text-warning me-2"></i>
-            Alertas del Sistema
-        </h1>
-        <p class="text-muted mb-0">Monitoreo de stock crítico y notificaciones importantes</p>
-    </div>
-    <div class="btn-toolbar">
-        <a href="{{ url_for('materia_prima.listar') }}" class="btn btn-outline-primary">
-            <i class="bi bi-box-seam me-1"></i>Ver Inventario
-        </a>
-    </div>
-</div>
 
 {% if alertas %}
     <div class="alert alert-warning border-warning">
@@ -24,7 +21,7 @@
             <i class="bi bi-exclamation-triangle-fill fs-4 me-3"></i>
             <div>
                 <h5 class="alert-heading mb-1">{{ alertas|length }} alertas activas</h5>
-                <p class="mb-0">Se encontraron materias primas con stock crítico que requieren atención inmediata.</p>
+                <p class="mb-0">Se encontraron insumos con stock crítico que requieren atención inmediata.</p>
             </div>
         </div>
     </div>
@@ -48,7 +45,7 @@
                             <button class="btn btn-outline-success btn-sm me-2" onclick="marcarLeida('{{ alerta.id }}')">
                                 <i class="bi bi-check me-1"></i>Marcar Leída
                             </button>
-                            <a href="{{ url_for('materia_prima.listar') }}" class="btn btn-primary btn-sm">
+                            <a href="{{ url_for('insumo.listar') }}" class="btn btn-primary btn-sm">
                                 <i class="bi bi-plus-square me-1"></i>Registrar Lote
                             </a>
                         </div>
@@ -64,9 +61,9 @@
             <i class="bi bi-check-circle-fill text-success fs-1 mb-3"></i>
             <h4>No hay alertas activas</h4>
             <p class="text-muted mb-4">
-                Todas las materias primas tienen stock suficiente. ¡El sistema está funcionando correctamente!
+                Todos los insumos tienen stock suficiente. ¡El sistema está funcionando correctamente!
             </p>
-            <a href="{{ url_for('materia_prima.listar') }}" class="btn btn-primary">
+            <a href="{{ url_for('insumo.listar') }}" class="btn btn-primary">
                 <i class="bi bi-box-seam me-1"></i>Ver Inventario Completo
             </a>
         </div>

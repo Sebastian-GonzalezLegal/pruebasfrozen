@@ -3,11 +3,8 @@
 {% block title %}Dashboard - Sistema Frozen{% endblock %}
 
 {% block content %}
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-4 border-bottom">
-    <div>
-        <h1 class="h2 mb-1">Dashboard</h1>
-        <p class="text-muted mb-0">Resumen general del sistema de producción</p>
-    </div>
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Dashboard</h1>
 </div>
 
 <!-- Tarjetas de Estadísticas -->
@@ -101,14 +98,14 @@
                     <i class="bi bi-exclamation-triangle-fill text-warning me-2"></i>
                     Alertas de Stock Bajo
                 </h5>
-                <a href="{{ url_for('materia_prima.alertas') }}" class="btn btn-outline-primary btn-sm">
+                <a href="{{ url_for('insumo.alertas') }}" class="btn btn-outline-primary btn-sm">
                     Ver todas
                 </a>
             </div>
             <div class="card-body p-0">
                 <div class="list-group list-group-flush">
                     {% for alerta in alertas[:5] %}
-                    <a href="{{ url_for('materia_prima.alertas') }}" 
+                    <a href="{{ url_for('insumo.alertas') }}" 
                        class="list-group-item list-group-item-action d-flex justify-content-between align-items-start">
                         <div class="ms-2 me-auto">
                             <div class="fw-bold">{{ alerta.titulo }}</div>

@@ -1,155 +1,103 @@
 :root {
     /* Gray/White Palette */
-    --frozen-primary: #495057; /* A medium-dark gray for primary elements */
-    --frozen-secondary: #adb5bd; /* A lighter gray for secondary text/elements */
-    --frozen-light: #f8f9fa;   /* A very light gray for backgrounds */
-    --frozen-white: #ffffff;
-    --frozen-dark-gray: #212529; /* A soft, dark gray for body text */
-    --frozen-border: #e9ecef;   /* Lighter border color */
-    --frozen-shadow: rgba(0, 0, 0, 0.05); /* Softer shadow */
-
-    /* Button Colors */
-    --frozen-btn-primary: #007bff;
-    --frozen-btn-success: #28a745;
-    --frozen-btn-secondary: #6c757d;
-    --frozen-btn-danger: #dc3545;
+    --frozen-accent: #212529; /* Dark Gray for accents */
+    --frozen-accent-hover: #343a40;
+    --frozen-bg: #ffffff;
+    --frozen-text-primary: #212529;
+    --frozen-text-secondary: #6c757d;
+    --frozen-border: #dee2e6;
+    --frozen-card-bg: #f8f9fa; /* Light gray for cards */
+    --frozen-shadow: rgba(0, 0, 0, 0.05);
 }
 
 body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: var(--frozen-white);
-    color: var(--frozen-dark-gray);
+    font-family: 'Inter', sans-serif;
+    background-color: var(--frozen-bg);
+    color: var(--frozen-text-primary);
     line-height: 1.6;
+    padding-top: 70px; /* Ajuste para la barra de navegación fija */
 }
 
 /* Navbar styles */
 .navbar-custom {
-    background-color: var(--frozen-white) !important;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    padding: 0.5rem 0;
     border-bottom: 1px solid var(--frozen-border);
+    background: #F9F9F9;
 }
 
 .navbar-custom .navbar-brand {
     font-weight: 700;
     font-size: 1.5rem;
-    color: var(--frozen-dark-gray) !important;
+    color: var(--frozen-text-primary) !important;
 }
 
 .navbar-custom .nav-link {
-    color: var(--frozen-dark-gray) !important;
-    font-weight: 500;
+    color: var(--frozen-text-secondary) !important;
+    font-weight: 600;
     padding: 0.75rem 1rem !important;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
 }
 
 .navbar-custom .nav-link:hover {
-    background-color: rgba(255, 255, 255, 0.1);
-    border-radius: 4px;
-}
-
-/* Sidebar styles */
-.sidebar {
-    background-color: var(--frozen-light);
-    border-right: 1px solid var(--frozen-border);
-    min-height: calc(100vh - 56px);
-    /* Minimalist: removed shadow */
-}
-
-.sidebar .nav-link {
-    color: var(--frozen-dark-gray);
-    padding: 0.75rem 1.25rem;
-    border-radius: 0;
-    font-weight: 500;
-    transition: all 0.2s ease;
-    border-left: 3px solid transparent;
-}
-
-.sidebar .nav-link:hover {
-    background-color: var(--frozen-border);
-    color: var(--frozen-dark-gray);
-}
-
-.sidebar .nav-link.active {
-    background-color: var(--frozen-primary);
-    color: white;
-    border-left: 3px solid #ffffff;
-}
-
-.sidebar-heading {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--frozen-secondary);
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
-    padding: 0.75rem 1.25rem 0.25rem;
-    margin: 0;
+    color: var(--frozen-accent) !important;
 }
 
 /* Card styles */
 .card {
     border: 1px solid var(--frozen-border);
     border-radius: 8px;
-    /* Minimalist: removed shadow for a flatter look */
-    box-shadow: none;
-    transition: border-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 1px 3px var(--frozen-shadow);
+    transition: all 0.3s ease;
+    background-color: var(--frozen-bg);
 }
 
 .card:hover {
-    border-color: #ced4da; /* Slightly darken border on hover */
-    transform: translateY(-2px);
+    box-shadow: 0 4px 8px var(--frozen-shadow);
 }
 
 .card-header {
-    background-color: var(--frozen-light);
+    background-color: transparent;
     border-bottom: 1px solid var(--frozen-border);
     font-weight: 600;
-    padding: 1rem 1.25rem;
+    padding: 1rem 1.5rem;
 }
 
 /* Button styles */
 .btn {
-    font-weight: 500;
-    border-radius: 6px;
-    transition: all 0.2s ease-in-out;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: all 0.25s ease-in-out;
+    padding: 0.6rem 1.2rem;
+    border: none;
 }
 
 .btn-primary {
-    background-color: var(--frozen-btn-primary);
-    border-color: var(--frozen-btn-primary);
+    background-color: var(--frozen-accent);
+    color: white;
 }
 
 .btn-primary:hover {
-    opacity: 0.9;
+    background-color: var(--frozen-accent-hover);
 }
 
 .btn-success {
-    background-color: var(--frozen-btn-success);
-    border-color: var(--frozen-btn-success);
-    color: var(--frozen-white);
+    background-color: #16a34a; /* Green */
+    color: white;
 }
 
 .btn-success:hover {
-    opacity: 0.9;
-}
-
-.btn-outline-primary {
-    color: var(--frozen-btn-primary);
-    border-color: var(--frozen-btn-primary);
-}
-
-.btn-outline-primary:hover {
-    background-color: var(--frozen-btn-primary);
-    color: var(--frozen-white);
+    background-color: #15803d;
 }
 
 .btn-outline-secondary {
-    color: var(--frozen-btn-secondary);
-    border-color: var(--frozen-btn-secondary);
+    background-color: transparent;
+    color: var(--frozen-text-secondary);
+    border: 1px solid var(--frozen-border);
 }
 
 .btn-outline-secondary:hover {
-    background-color: var(--frozen-btn-secondary);
-    color: var(--frozen-white);
+    background-color: var(--frozen-bg);
+    border-color: var(--frozen-text-secondary);
 }
 
 /* Table styles */
@@ -280,20 +228,38 @@ body {
     margin-bottom: 1rem;
 }
 
-/* Statistics cards */
-.stat-card {
-    border-left: 4px solid var(--frozen-primary);
-    transition: transform 0.2s ease;
+@keyframes card-entry {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
+/* Statistics cards */
+.stat-card {
+    border-left: 4px solid var(--frozen-accent);
+    animation: card-entry 0.6s ease-out backwards;
+}
+
+/* Staggered animation delay */
+.stat-card:nth-child(1) { animation-delay: 0.1s; }
+.stat-card:nth-child(2) { animation-delay: 0.2s; }
+.stat-card:nth-child(3) { animation-delay: 0.3s; }
+.stat-card:nth-child(4) { animation-delay: 0.4s; }
+
+
 .stat-card:hover {
-    transform: translateY(-2px);
+    border-left-color: var(--frozen-accent-hover);
 }
 
 .stat-value {
     font-size: 2rem;
     font-weight: 700;
-    color: var(--frozen-primary);
+    color: var(--frozen-text-primary);
 }
 
 .stat-label {
