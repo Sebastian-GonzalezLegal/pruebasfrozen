@@ -3,7 +3,6 @@ from flask_cors import CORS
 from app.config import Config
 from app.views.insumo import insumos_bp
 from app.views.inventario import inventario_bp
-from app.routes.web_routes import web_bp
 import logging
 from .json_encoder import CustomJSONEncoder
 
