@@ -3,6 +3,7 @@ from flask_cors import CORS
 from app.config import Config
 from app.views.insumo import insumos_bp
 from app.views.inventario import inventario_bp
+from app.routes.web_routes import web_bp
 import logging
 from .json_encoder import CustomJSONEncoder
 
@@ -15,8 +16,10 @@ def create_app():
         format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
     )
 
-    app = Flask(__name__)
+    app = Flask(__name__, static_folder='static', template_folder='templates')
     app.config.from_object(Config)
+    app.config['SECRET_KEY'] = 'a_very_secret_key'
+
 
      # ✅ Configurar el encoder personalizado para Flask 2.3+
     app.json = CustomJSONEncoder(app)
@@ -33,6 +36,7 @@ def create_app():
     # Registrar blueprints
     app.register_blueprint(insumos_bp)
     app.register_blueprint(inventario_bp)
+    app.register_blueprint(web_bp)
 
     # Ruta de health check
     @app.route('/api/health')
