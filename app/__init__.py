@@ -7,6 +7,8 @@ from app.routes.usuario_routes import usuario_bp
 from app.routes.materia_prima_routes import materia_prima_bp
 from app.routes.asistencia_routes import asistencia_bp
 from app.routes.dashboard_routes import dashboard_bp
+from app.routes.orden_produccion_routes import orden_produccion_bp
+from app.routes.reportes_routes import reportes_bp
 import logging
 from .json_encoder import CustomJSONEncoder
 
@@ -43,6 +45,8 @@ def create_app():
     app.register_blueprint(materia_prima_bp)
     app.register_blueprint(asistencia_bp)
     app.register_blueprint(dashboard_bp)
+    app.register_blueprint(orden_produccion_bp)
+    app.register_blueprint(reportes_bp)
 
     # --- DEV-ONLY: RUTA PARA SALTAR EL LOGIN ---
     @app.route('/dev-login')

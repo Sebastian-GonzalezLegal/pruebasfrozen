@@ -1,33 +1,42 @@
 :root {
-    --frozen-primary: #000000;
-    --frozen-secondary: #6c757d;
-    --frozen-light: #f8f9fa;
-    --frozen-border: #dee2e6;
-    --frozen-shadow: rgba(0, 0, 0, 0.1);
+    /* Gray/White Palette */
+    --frozen-primary: #495057; /* A medium-dark gray for primary elements */
+    --frozen-secondary: #adb5bd; /* A lighter gray for secondary text/elements */
+    --frozen-light: #f8f9fa;   /* A very light gray for backgrounds */
+    --frozen-white: #ffffff;
+    --frozen-dark-gray: #212529; /* A soft, dark gray for body text */
+    --frozen-border: #e9ecef;   /* Lighter border color */
+    --frozen-shadow: rgba(0, 0, 0, 0.05); /* Softer shadow */
+
+    /* Button Colors */
+    --frozen-btn-primary: #007bff;
+    --frozen-btn-success: #28a745;
+    --frozen-btn-secondary: #6c757d;
+    --frozen-btn-danger: #dc3545;
 }
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #ffffff;
-    color: #000000;
+    background-color: var(--frozen-white);
+    color: var(--frozen-dark-gray);
     line-height: 1.6;
 }
 
 /* Navbar styles */
 .navbar-custom {
-    background-color: var(--frozen-primary) !important;
-    border-bottom: 2px solid var(--frozen-border);
-    box-shadow: 0 2px 4px var(--frozen-shadow);
+    background-color: var(--frozen-white) !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid var(--frozen-border);
 }
 
 .navbar-custom .navbar-brand {
     font-weight: 700;
     font-size: 1.5rem;
-    color: white !important;
+    color: var(--frozen-dark-gray) !important;
 }
 
 .navbar-custom .nav-link {
-    color: #ffffff !important;
+    color: var(--frozen-dark-gray) !important;
     font-weight: 500;
     padding: 0.75rem 1rem !important;
     transition: all 0.3s ease;
@@ -43,22 +52,21 @@ body {
     background-color: var(--frozen-light);
     border-right: 1px solid var(--frozen-border);
     min-height: calc(100vh - 56px);
-    box-shadow: 2px 0 4px var(--frozen-shadow);
+    /* Minimalist: removed shadow */
 }
 
 .sidebar .nav-link {
-    color: var(--frozen-primary);
+    color: var(--frozen-dark-gray);
     padding: 0.75rem 1.25rem;
     border-radius: 0;
     font-weight: 500;
-    transition: all 0.3s ease;
+    transition: all 0.2s ease;
     border-left: 3px solid transparent;
 }
 
 .sidebar .nav-link:hover {
-    background-color: #ffffff;
-    border-left: 3px solid var(--frozen-primary);
-    color: var(--frozen-primary);
+    background-color: var(--frozen-border);
+    color: var(--frozen-dark-gray);
 }
 
 .sidebar .nav-link.active {
@@ -81,12 +89,14 @@ body {
 .card {
     border: 1px solid var(--frozen-border);
     border-radius: 8px;
-    box-shadow: 0 2px 8px var(--frozen-shadow);
-    transition: box-shadow 0.3s ease;
+    /* Minimalist: removed shadow for a flatter look */
+    box-shadow: none;
+    transition: border-color 0.3s ease, transform 0.3s ease;
 }
 
 .card:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-color: #ced4da; /* Slightly darken border on hover */
+    transform: translateY(-2px);
 }
 
 .card-header {
@@ -97,25 +107,49 @@ body {
 }
 
 /* Button styles */
-.btn-primary {
-    background-color: var(--frozen-primary);
-    border-color: var(--frozen-primary);
+.btn {
     font-weight: 500;
+    border-radius: 6px;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-primary {
+    background-color: var(--frozen-btn-primary);
+    border-color: var(--frozen-btn-primary);
 }
 
 .btn-primary:hover {
-    background-color: #333333;
-    border-color: #333333;
+    opacity: 0.9;
+}
+
+.btn-success {
+    background-color: var(--frozen-btn-success);
+    border-color: var(--frozen-btn-success);
+    color: var(--frozen-white);
+}
+
+.btn-success:hover {
+    opacity: 0.9;
 }
 
 .btn-outline-primary {
-    color: var(--frozen-primary);
-    border-color: var(--frozen-primary);
+    color: var(--frozen-btn-primary);
+    border-color: var(--frozen-btn-primary);
 }
 
 .btn-outline-primary:hover {
-    background-color: var(--frozen-primary);
-    border-color: var(--frozen-primary);
+    background-color: var(--frozen-btn-primary);
+    color: var(--frozen-white);
+}
+
+.btn-outline-secondary {
+    color: var(--frozen-btn-secondary);
+    border-color: var(--frozen-btn-secondary);
+}
+
+.btn-outline-secondary:hover {
+    background-color: var(--frozen-btn-secondary);
+    color: var(--frozen-white);
 }
 
 /* Table styles */
@@ -181,9 +215,21 @@ body {
     font-weight: 500;
 }
 
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 /* Main content area */
 .main-content {
     padding: 2rem;
+    animation: fadeIn 0.5s ease-in-out;
 }
 
 /* Login page specific styles */

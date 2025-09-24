@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify
 from app.services.materia_prima_service import MateriaPrimaService
 from app.repositories.materia_prima_repository import MateriaPrimaRepository
+from app.repositories.lote_repository import LoteRepository
 from app.repositories.movimiento_stock_repository import MovimientoStockRepository
 from datetime import datetime
 
@@ -8,10 +9,13 @@ materia_prima_bp = Blueprint('materia_prima', __name__, url_prefix='/materias-pr
 
 # Instanciar repositorios
 materia_prima_repository = MateriaPrimaRepository()
+lote_repository = LoteRepository()
+# NOTA: El movimiento_stock_repository no se usa directamente en este blueprint,
+# pero se mantiene por si se añade funcionalidad futura.
 movimiento_stock_repository = MovimientoStockRepository()
 
 # Instanciar servicio con inyección de dependencias
-materia_prima_service = MateriaPrimaService(materia_prima_repository, movimiento_stock_repository)
+materia_prima_service = MateriaPrimaService(materia_prima_repository, lote_repository)
 
 @materia_prima_bp.route('/')
 def listar():
@@ -55,10 +59,9 @@ def nueva():
     return render_template('materias_primas/formulario.html') ##Cambiar html del front
 
 @materia_prima_bp.route('/<int:id>/stock', methods=['POST'])
-def actualizar_stock():
+def actualizar_stock(id: int):
     """Actualizar stock de materia prima"""
     try:
-        id = request.form['materia_prima_id']
         tipo = request.form['tipo_movimiento']  # ENTRADA o SALIDA
         cantidad = float(request.form['cantidad'])
         observaciones = request.form.get('observaciones', '')
@@ -99,3 +102,22 @@ def alertas():
     """Ver alertas de stock bajo"""
     alertas_stock = materia_prima_service.obtener_alertas_stock_bajo()
     return render_template('materias_primas/alertas.html', alertas=alertas_stock) ##Cambiar html del front
+
+@materia_prima_bp.route('/<int:id>/lote/nuevo', methods=['GET', 'POST'])
+def registrar_lote(id: int):
+    """Registrar un nuevo lote para una materia prima."""
+    materia_prima = materia_prima_service.repository.get_by_id(id)
+    if not materia_prima:
+        flash('Materia prima no encontrada.', 'error')
+        return redirect(url_for('materia_prima.listar'))
+
+    if request.method == 'POST':
+        try:
+            # Lógica para procesar el formulario de nuevo lote
+            # ...
+            flash('Lote registrado exitosamente (funcionalidad placeholder).', 'success')
+            return redirect(url_for('materia_prima.listar'))
+        except Exception as e:
+            flash(f'Error al registrar el lote: {e}', 'error')
+
+    return render_template('materias_primas/registrar_lote.html', materia_prima=materia_prima)

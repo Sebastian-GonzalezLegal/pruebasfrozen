@@ -1,6 +1,6 @@
 from typing import Dict, Any, Optional
 from datetime import datetime
-from models.asistencia import AsistenciaRegistro
+from app.models.asistencia import AsistenciaRegistro
 from .base_repository import BaseRepository
 
 class AsistenciaRepository(BaseRepository[AsistenciaRegistro]):

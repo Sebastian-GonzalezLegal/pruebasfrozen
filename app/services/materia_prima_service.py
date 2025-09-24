@@ -33,7 +33,7 @@ class MateriaPrimaService:
             activo=True
         )
         
-        return self.materia_prima_repo.crear(materia_prima)
+        return self.materia_prima_repo.create(materia_prima)
 
     def registrar_ingreso_lote(self, materia_prima_id: int, proveedor_id: int, cantidad: float,
                                costo_por_unidad: float, fecha_vencimiento: Optional[datetime] = None,
