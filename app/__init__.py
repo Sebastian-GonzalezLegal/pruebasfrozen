@@ -5,6 +5,8 @@ from app.views.insumo import insumos_bp
 from app.views.inventario import inventario_bp
 from app.routes.usuario_routes import usuario_bp
 from app.routes.materia_prima_routes import materia_prima_bp
+from app.routes.asistencia_routes import asistencia_bp
+from app.routes.dashboard_routes import dashboard_bp
 import logging
 from .json_encoder import CustomJSONEncoder
 
@@ -39,6 +41,8 @@ def create_app():
     app.register_blueprint(inventario_bp)
     app.register_blueprint(usuario_bp)
     app.register_blueprint(materia_prima_bp)
+    app.register_blueprint(asistencia_bp)
+    app.register_blueprint(dashboard_bp)
 
     # --- DEV-ONLY: RUTA PARA SALTAR EL LOGIN ---
     @app.route('/dev-login')
@@ -49,7 +53,7 @@ def create_app():
         session['usuario_rol'] = 'admin'
         session['usuario_nombre'] = 'Usuario de Prueba'
         flash('Inicio de sesión de desarrollo exitoso.', 'info')
-        return redirect(url_for('materia_prima.listar'))
+        return redirect(url_for('dashboard.index'))
 
     # Ruta raíz para redirigir al login (o al dev-login)
     @app.route('/')

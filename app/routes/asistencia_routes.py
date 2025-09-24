@@ -1,6 +1,6 @@
 from flask import Blueprint, redirect, url_for, flash, session
-from services.asistencia_service import AsistenciaService
-from repositories.asistencia_repository import AsistenciaRepository
+from app.services.asistencia_service import AsistenciaService
+from app.repositories.asistencia_repository import AsistenciaRepository
 
 asistencia_bp = Blueprint('asistencia', __name__, url_prefix='/asistencia')
 
