@@ -1,6 +1,6 @@
 import logging
 from flask import Blueprint, session, request, redirect, url_for, flash, render_template
-from services.usuario_service import UsuarioService
+from app.services.usuario_service import UsuarioService
 
 usuario_bp = Blueprint('usuario', __name__, url_prefix='/usuarios')
 usuario_service = UsuarioService()
@@ -20,7 +20,7 @@ def login():
             session['usuario_nombre'] = f"{usuario.nombre} {usuario.apellido}"
             
             flash(f'Bienvenido {usuario.nombre}', 'success')
-            return redirect(url_for('dashboard.index')) #CAMBIAR HTML QUE PASE EL FRONT.
+            return redirect(url_for('materia_prima.listar'))
         else:
             # Logging mejorado para depuración
             user_exists = usuario_service.repository.obtener_por_email(email)

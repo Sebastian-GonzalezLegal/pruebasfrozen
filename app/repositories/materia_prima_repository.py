@@ -1,6 +1,6 @@
 from typing import List, Optional, Dict, Any
 from datetime import datetime
-from models.materia_prima import MateriaPrima
+from app.models.materia_prima import MateriaPrima
 from .base_repository import BaseRepository
 
 class MateriaPrimaRepository(BaseRepository[MateriaPrima]):

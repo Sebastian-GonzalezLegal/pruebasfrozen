@@ -21,6 +21,6 @@ if __name__ == "__main__":
 
     # 🌐 Ejecutar Flask
     flask_port = int(os.environ.get("FLASK_PORT", 5000))
-    app.run(host="0.0.0.0", port=flask_port, debug=Config.DEBUG)
+    app.run(host="0.0.0.0", port=flask_port, debug=False)
 
 

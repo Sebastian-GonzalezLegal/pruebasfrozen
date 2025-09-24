@@ -1,6 +1,6 @@
 from typing import Optional, List, Dict, Any
 from datetime import datetime, timedelta
-from models.lote import Lote
+from app.models.lote import Lote
 from .base_repository import BaseRepository
 
 class LoteRepository(BaseRepository[Lote]):

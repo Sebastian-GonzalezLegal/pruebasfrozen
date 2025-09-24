@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from typing import List, Optional, TypeVar, Generic, Dict, Any
-from db import get_supabase_client
+from app.db import get_supabase_client
 
 T = TypeVar('T')
 

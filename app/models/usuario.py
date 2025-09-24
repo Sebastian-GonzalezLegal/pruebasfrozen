@@ -1,6 +1,6 @@
 from datetime import datetime
 from dataclasses import dataclass
-from supabase_auth import Optional
+from typing import Optional
 from werkzeug.security import generate_password_hash, check_password_hash
 
 @dataclass

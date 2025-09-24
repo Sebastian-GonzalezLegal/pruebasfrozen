@@ -14,7 +14,7 @@
     <!-- Navbar - Solo si hay sesión activa -->
     <nav class="navbar navbar-expand-lg navbar-custom fixed-top">
         <div class="container-fluid">
-            <a class="navbar-brand d-flex align-items-center" href="{{ url_for('dashboard.index') }}">
+            <a class="navbar-brand d-flex align-items-center" href="{{ url_for('materia_prima.listar') }}">
                 <i class="bi bi-snow2 me-2 fs-4"></i>
                 FrozenProd
             </a>
@@ -57,13 +57,6 @@
             <div class="col-md-3 col-lg-2 p-0 sidebar">
                 <div class="position-sticky top-0 pt-3">
                     <nav class="nav flex-column">
-                        <a class="nav-link d-flex align-items-center 
-                           {% if request.endpoint == 'dashboard.index' %}active{% endif %}" 
-                           href="{{ url_for('dashboard.index') }}">
-                            <i class="bi bi-speedometer2 me-2"></i>
-                            Dashboard
-                        </a>
-                        
                         <div class="sidebar-heading mt-3">Inventario</div>
                         
                         <a class="nav-link d-flex align-items-center
@@ -81,29 +74,30 @@
                         
                         <div class="sidebar-heading mt-3">Producción</div>
                         
-                        <a class="nav-link d-flex align-items-center
-                           {% if 'orden_produccion' in request.endpoint %}active{% endif %}" 
-                           href="{{ url_for('orden_produccion.listar') }}">
+                        <!-- JULES: El siguiente enlace está deshabilitado temporalmente porque la ruta 'orden_produccion.listar' no existe. -->
+                        <a class="nav-link d-flex align-items-center disabled" 
+                           href="#">
                             <i class="bi bi-gear me-2"></i>
                             Órdenes de Producción
                         </a>
                         
                         <div class="sidebar-heading mt-3">Reportes</div>
                         
-                        <a class="nav-link d-flex align-items-center" 
-                           href="{{ url_for('reportes.produccion') }}">
+                        <!-- JULES: Los siguientes enlaces están deshabilitados temporalmente porque las rutas de reportes no existen. -->
+                        <a class="nav-link d-flex align-items-center disabled" 
+                           href="#">
                             <i class="bi bi-bar-chart me-2"></i>
                             Producción
                         </a>
                         
-                        <a class="nav-link d-flex align-items-center" 
-                           href="{{ url_for('reportes.stock') }}">
+                        <a class="nav-link d-flex align-items-center disabled" 
+                           href="#">
                             <i class="bi bi-graph-up me-2"></i>
                             Inventario
                         </a>
                         
-                        <a class="nav-link d-flex align-items-center" 
-                           href="{{ url_for('reportes.trazabilidad') }}">
+                        <a class="nav-link d-flex align-items-center disabled" 
+                           href="#">
                             <i class="bi bi-search me-2"></i>
                             Trazabilidad
                         </a>

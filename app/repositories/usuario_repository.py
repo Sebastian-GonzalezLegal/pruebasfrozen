@@ -1,6 +1,6 @@
 from typing import Optional, Dict, Any
 from datetime import datetime
-from models.usuario import Usuario
+from app.models.usuario import Usuario
 from .base_repository import BaseRepository
 
 class UsuarioRepository(BaseRepository[Usuario]):

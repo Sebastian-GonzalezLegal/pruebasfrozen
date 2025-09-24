@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify
-from services.materia_prima_service import MateriaPrimaService
-from repositories.materia_prima_repository import MateriaPrimaRepository
-from repositories.movimiento_stock_repository import MovimientoStockRepository
+from app.services.materia_prima_service import MateriaPrimaService
+from app.repositories.materia_prima_repository import MateriaPrimaRepository
+from app.repositories.movimiento_stock_repository import MovimientoStockRepository
 from datetime import datetime
 
 materia_prima_bp = Blueprint('materia_prima', __name__, url_prefix='/materias-primas')

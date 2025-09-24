@@ -1,8 +1,10 @@
-from flask import Flask
+from flask import Flask, redirect, url_for, session, flash
 from flask_cors import CORS
 from app.config import Config
 from app.views.insumo import insumos_bp
 from app.views.inventario import inventario_bp
+from app.routes.usuario_routes import usuario_bp
+from app.routes.materia_prima_routes import materia_prima_bp
 import logging
 from .json_encoder import CustomJSONEncoder
 
@@ -35,7 +37,27 @@ def create_app():
     # Registrar blueprints
     app.register_blueprint(insumos_bp)
     app.register_blueprint(inventario_bp)
-    app.register_blueprint(web_bp)
+    app.register_blueprint(usuario_bp)
+    app.register_blueprint(materia_prima_bp)
+
+    # --- DEV-ONLY: RUTA PARA SALTAR EL LOGIN ---
+    @app.route('/dev-login')
+    def dev_login():
+        """Ruta temporal para desarrollo que simula un inicio de sesión."""
+        session.clear()
+        session['usuario_id'] = 999  # ID de usuario de prueba
+        session['usuario_rol'] = 'admin'
+        session['usuario_nombre'] = 'Usuario de Prueba'
+        flash('Inicio de sesión de desarrollo exitoso.', 'info')
+        return redirect(url_for('materia_prima.listar'))
+
+    # Ruta raíz para redirigir al login (o al dev-login)
+    @app.route('/')
+    def index():
+        # JULES: Cambiado para apuntar a dev-login para pruebas.
+        # Cambiar de vuelta a 'usuario.login' para producción.
+        return redirect(url_for('dev_login'))
+        # return redirect(url_for('usuario.login'))
 
     # Ruta de health check
     @app.route('/api/health')

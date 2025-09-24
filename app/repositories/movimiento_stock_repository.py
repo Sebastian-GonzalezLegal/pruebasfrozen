@@ -1,10 +1,14 @@
 from typing import List
-from models.movimiento_stock import MovimientoStock
+from app.models.movimiento_stock import MovimientoStock
 from datetime import datetime
 from .base_repository import BaseRepository
 
-class MovimientoStockRepository(BaseRepository):
+class MovimientoStockRepository(BaseRepository[MovimientoStock]):
     
+    @property
+    def table_name(self) -> str:
+        return 'movimientos_stock'
+
     def registrar_movimiento(self, materia_prima_id: int, tipo_movimiento: str, cantidad: float,
                            usuario_id: int, lote_id: int = None, orden_produccion_id: int = None,
                            observaciones: str = None) -> MovimientoStock:
@@ -27,7 +31,7 @@ class MovimientoStockRepository(BaseRepository):
         response = self.client.table('movimientos_stock').insert(data).execute()
         
         if response.data:
-            return self._dict_to_movimiento(response.data[0])
+            return self._dict_to_model(response.data[0])
         
         raise Exception("Error al registrar movimiento de stock")
     
@@ -36,14 +40,14 @@ class MovimientoStockRepository(BaseRepository):
             'materia_prima_id', materia_prima_id
         ).order('fecha', desc=True).limit(limite).execute()
         
-        return [self._dict_to_movimiento(item) for item in response.data]
+        return [self._dict_to_model(item) for item in response.data]
     
     def obtener_por_orden(self, orden_produccion_id: int) -> List[MovimientoStock]:
         response = self.client.table('movimientos_stock').select("*").eq(
             'orden_produccion_id', orden_produccion_id
         ).execute()
         
-        return [self._dict_to_movimiento(item) for item in response.data]
+        return [self._dict_to_model(item) for item in response.data]
     
     def obtener_por_periodo(self, fecha_inicio: datetime, fecha_fin: datetime) -> List[MovimientoStock]:
         response = self.client.table('movimientos_stock').select("*").gte(
@@ -52,9 +56,9 @@ class MovimientoStockRepository(BaseRepository):
             'fecha', fecha_fin.isoformat()
         ).order('fecha', desc=True).execute()
         
-        return [self._dict_to_movimiento(item) for item in response.data]
+        return [self._dict_to_model(item) for item in response.data]
     
-    def _dict_to_movimiento(self, data: dict) -> MovimientoStock:
+    def _dict_to_model(self, data: dict) -> MovimientoStock:
         return MovimientoStock(
             id=data['id'],
             materia_prima_id=data['materia_prima_id'],

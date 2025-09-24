@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import Optional
-from models.usuario import Usuario
-from repositories.usuario_repository import UsuarioRepository
+from app.models.usuario import Usuario
+from app.repositories.usuario_repository import UsuarioRepository
 
 class UsuarioService:
     

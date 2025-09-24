@@ -1,9 +1,9 @@
 from typing import List, Optional
 from datetime import datetime
-from models.materia_prima import MateriaPrima
-from models.lote import Lote
-from repositories.materia_prima_repository import MateriaPrimaRepository
-from repositories.lote_repository import LoteRepository
+from app.models.materia_prima import MateriaPrima
+from app.models.lote import Lote
+from app.repositories.materia_prima_repository import MateriaPrimaRepository
+from app.repositories.lote_repository import LoteRepository
 
 class MateriaPrimaService:
     
