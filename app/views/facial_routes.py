@@ -6,7 +6,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 # Crear blueprint de autenticación facial
-facial_bp = Blueprint('facial', __name__, template_folder='templates')
+facial_bp = Blueprint('facial', __name__)
 
 # ====== RUTAS PRINCIPALES ======
 
@@ -74,7 +74,7 @@ def logout_face():
 @facial_bp.route("/facial/login_totem")
 def login_totem():
     """Página del tótem para reconocimiento facial"""
-    return render_template("login_totem.html")
+    return render_template("usuarios/login_totem.html")
 
 @facial_bp.route("/facial/panel_totem")
 def panel_totem():
@@ -84,14 +84,14 @@ def panel_totem():
         return redirect(url_for("facial.login_totem"))
 
     from datetime import datetime
-    return render_template("panel_totem.html", now=datetime.now())
+    return render_template("usuarios/panel_totem.html", now=datetime.now())
 
 # ====== RUTAS WEB (para acceso desde navegador) ======
 
 @facial_bp.route("/facial/login_web_page")
 def login_web_page():
     """Página de login web"""
-    return render_template("login_web.html")
+    return render_template("usuarios/login.html")
 
 @facial_bp.route("/facial/login_web", methods=["POST"])
 def login_web():
@@ -141,7 +141,7 @@ def panel_web():
         flash(verificacion.get('error', 'Acceso no permitido'), "error")
         return redirect(url_for('facial.login_web_page'))
 
-    return render_template("panel_web.html")
+    return render_template("usuarios/panel_web.html")
 
 @facial_bp.route("/facial/logout_web")
 def logout_web():
